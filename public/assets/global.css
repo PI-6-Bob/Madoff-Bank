@@ -1,0 +1,13 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+}
+
+form {
+	display: flex;
+	flex-flow: column nowrap;
+}
+
+body {
+	margin: 0;
+}
