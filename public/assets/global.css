@@ -1,7 +1,8 @@
 /**
  * Fonts
  * */
-@font-face {
+@font-face 
+{
     font-family: "Lexend";
     src: url(/assets/lexend.ttf) format("truetype");
 }
@@ -9,93 +10,85 @@
 /**
  * Global page configurations and resets
  * */
-* {
+*
+{
 	box-sizing: border-box;
 	margin: 0;
 }
 
-body {
+body 
+{
 	margin: 0;
 	font-family: 'Lexend', Roboto, sans-serif;
+}
+
+h1
+{
+	font-weight: bold;
 }
 
 /**
  * Input resets and global sytles
  * */
-input, textarea, button {
+input, textarea, button 
+{
+	appearance: textfield;
 	display: inline-block;
 	font-family: fantasy;
 	font-size: 1em;
 	background: white;
 	border: 1px solid gray;
-	padding: 10px 20px;
+	padding: 6px 12px;
 	outline: none;
 }
 
-textarea {
-	min-height: calc(22px + 1em);
-	min-width: calc(42px + 1em);
+textarea 
+{
+	min-height: calc(14px + 1em);
+	min-width: calc(26px + 1em);
 }
 
-button, input[type=button], input[type=submit], input[type=reset], input[type=image] {
+button, 
+input[type=button], 
+input[type=submit], 
+input[type=reset], 
+input[type=image] 
+{
+	appearance: button;
 	border-radius: 5px;
 	background: whitesmoke;
 }
 
-/*
-input[type=text], 
-input[type=email],
-input[type=password], 
-input[type=number],
-input[type=date],
-input[type=datetime-local],
-input[type=month],
-input[type=search],
-input[type=tel],
-input[type=time],
-input[type=url],
-input[type=week],
-textarea {
-	appearance: textfield;
-	border: none;
-	background: #D9D9D975;
-	border-radius: 10px;
-	border-bottom: 4px solid black;
-	margin-bottom: 4px;
-}
-
-button, input[type=button], input[type=submit], input[type=reset], input[type=image] {
-	background: #3A7A3C;
-	border-radius: 10px;
-	color: white;
-}
-*/
-
-::placeholder {
-	text-align: center;
+main 
+{
+	margin: 8px;
 }
 
 /**
  * Forms reset and style
  * */
-form {
+form 
+{
 	display: flex;
 	flex-flow: column nowrap;
 	margin: 8px;
 }
 
-form .field {
+form .field 
+{
 	flex: 1 1 auto;
 	margin-bottom: 4px;
 }
 
-form .field label {
+form .field label 
+{
 	display: block;
 }
 
 form .field input, 
 form .field textarea, 
-form .field button {
+form .field button 
+{
 	display: block;
 }
 

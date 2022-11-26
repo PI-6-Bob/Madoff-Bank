@@ -22,13 +22,14 @@ function page(string $_file, array $_context = []) {
 	<?php foreach ($_styles ?? [] as $href): ?>
 		<link rel="stylesheet" href="/assets/<?= $href ?>">
 	<?php endforeach ?>
-	<script src="/assets/main.js" defer></script>
+	<script src="/src/main.js" type="module" defer></script>
 	<?php foreach ($_scripts ?? [] as $src): ?>
-		<script src="/assets/<?= $src ?>" defer></script>
+		<script src="/src/<?= $src ?>" type="module" defer></script>
 	<?php endforeach ?>
 </head>
 <body>
-	<?php include "templates/$_file" ?>
+	<?php include 'templates/header-anon.html' ?>
+	<main id='content'><?php include "templates/$_file" ?></main>
 </body>
 </html>
 <?php
