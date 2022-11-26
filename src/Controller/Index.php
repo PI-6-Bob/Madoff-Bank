@@ -11,7 +11,7 @@ class Index
 	public function __construct(App $app) {
 	}
 
-	#[Route('madoff.index', '/')]
+	#[Route('madoff.index', '/', 'GET')]
 	public function cont(App $app, array $request) {
 		page('index.html');
 	}

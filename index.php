@@ -6,6 +6,7 @@ use src\Task as Task;
 use src\Service as Serv;
 
 (new App([
+	Database::class,
 	Cont\Index::class,
 	Serv\Test::class,
 ]))->run($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);

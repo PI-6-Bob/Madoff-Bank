@@ -2,6 +2,8 @@
 
 require_once 'libs/autoloader.php';
 require_once 'libs/attributes.php';
+require_once 'libs/database.php';
+require_once 'libs/routes.php';
 require_once 'libs/utils.php';
 
 use libs\Attribute\Route;
@@ -25,6 +27,7 @@ class App
 	private array $tasks = [];
 	
 	public function __construct(array $workers) {
+		$workers[] = NotFound::class;
 		foreach ($workers as $class) {
 			$reflection = new ReflectionClass($class);
 			/** @var ReflectionAttribute */
@@ -51,9 +54,9 @@ class App
 							$this->add_route($meta);
 							break;
 					}
-				}
-			}
-		}
+				} // attr
+			} // method_rf
+		} // workers
 	}
 
 	private function add_task(Task $task) {
@@ -69,7 +72,8 @@ class App
 	}
 
 	private function add_route(Route $route) {
-		$this->routes['paths'][$route->path] = $route->name;
+		if (isset($route->path))
+			$this->routes['paths'][$route->path] = $route->name;
 		$this->routes['routes'][$route->name] = $route;
 	}
 
@@ -88,7 +92,7 @@ class App
 		];
 		$this->execute('router.before', $request);
 		/** @var Route */
-		$route_data = $this->routes['routes'][$route];
+		$route_data = $this->routes['routes'][$route] ?? null;
 		if (isset($route_data->method) && strcmp($method, $route_data->method) != 0)
 			$route_data = $this->routes['routes']['error.not_found'];
 		$controller = new $route_data->class($this);
