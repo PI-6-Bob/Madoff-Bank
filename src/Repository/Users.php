@@ -6,7 +6,7 @@ use Repository;
 use src\Entity\Account;
 use src\Entity\Person;
 
-class User extends Repository
+class Users extends Repository
 {
 	public function deleteUser(Account $account) {
 		$stmt = $this->prepare('DELETE FROM account WHERE id=?');

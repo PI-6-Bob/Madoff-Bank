@@ -19,7 +19,7 @@
 if (isset($_session)):
 		include 'templates/header-user.php';
 else:
-		include 'templates/header-anon.html';
+		include 'templates/header-anon.php';
 endif ?>
 	<main id='content'><?php include "templates/$_file" ?></main>
 </body>

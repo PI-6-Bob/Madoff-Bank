@@ -5,7 +5,7 @@ namespace src\Controller;
 use Controller;
 use libs\Attribute\Route;
 use src\Attribute\NotLogged;
-use src\Repository\User as UserRepo;
+use src\Repository\Users;
 
 #[NotLogged]
 class Index extends Controller
@@ -20,7 +20,7 @@ class Index extends Controller
 	#[Route('madoff.login', '/login', 'post')]
 	public function login(array &$request) {
 		/** @var UserRepo */
-		$repo = $this->db->repo(UserRepo::class);
+		$repo = $this->db->repo(Users::class);
 		$user = $repo->getByEmail($request['data']['_email']);
 		if (isset($user) && password_verify($request['data']['_password'], $user->password)) {
 			$this->session->set('role', $user->role);

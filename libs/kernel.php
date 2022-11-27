@@ -101,28 +101,34 @@ class App
 	}
 
 	public function run(string $uri, string $method) {
-		$url_path = parse_url($uri, PHP_URL_PATH);
-		$method = strtolower($method);
-		$route_name = $this->routes['paths'][$url_path] ?? 'error.not_found';
-		$request = [
-			'headers' => getallheaders(),
-			'cookies' => $_COOKIE,
-			'params' => $_GET,
-			'data' => $_POST,
-			'path' => $url_path,
-			'method' => $method,
-			'route' => $this->route($route_name),
-		];
-		$this->execute('router.before', $request, $route_name);
-		$route = $this->route($route_name);
-		$request['route'] = $route;
-		/** @var Route */
-		if (isset($route->method) && strcmp($method, $route->method) != 0)
-			$route = $this->routes['routes']['error.not_found'];
-		$controller = new $route->class($this);
-		$response = $controller->{$route->fn}($request);
-		$this->execute('router.after', $request, $response);
-		echo $response;
+		try {
+			$url_path = parse_url($uri, PHP_URL_PATH);
+			$method = strtolower($method);
+			$route_name = $this->routes['paths'][$url_path] ?? 'error.not_found';
+			$request = [
+				'headers' => getallheaders(),
+				'cookies' => $_COOKIE,
+				'params' => $_GET,
+				'data' => $_POST,
+				'path' => $url_path,
+				'method' => $method,
+				'route' => $this->route($route_name),
+			];
+			$this->execute('router.before', $request, $route_name);
+			$route = $this->route($route_name);
+			$request['route'] = $route;
+			/** @var Route */
+			if (isset($route->method) && strcmp($method, $route->method) != 0)
+				$route = $this->routes['routes']['error.not_found'];
+			$controller = new $route->class($this);
+			$response = $controller->{$route->fn}($request);
+			$this->execute('router.after', $request, $response);
+			echo $response;
+		} catch(Error|Exception $e) {
+			$route = $this->route('error.internal');
+			$controller = new $route->class($this);
+			$response = $controller->{$route->fn}($request);
+		}
 	}
 
 	public function service(string $name): ?object {

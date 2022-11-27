@@ -3,6 +3,7 @@
 namespace src\Controller;
 
 use Controller;
+use Exception;
 use libs\Attribute\Route;
 use src\Attribute\IsLogged;
 
