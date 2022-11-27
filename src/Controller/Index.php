@@ -2,17 +2,29 @@
 
 namespace src\Controller;
 
-use App;
+use Controller;
 use libs\Attribute\Route;
-use src\Service\Test;
+use src\Repository\User as UserRepo;
 
-class Index 
+class Index extends Controller
 {
-	public function __construct(App $app) {
+	#[Route('madoff.index', '/')]
+	public function content(array &$request) {
+		$this->page('index.php', [
+			'_target' => $request['_referer'] ?? '/home',
+		]);
 	}
 
-	#[Route('madoff.index', '/', 'GET')]
-	public function cont(App $app, array $request) {
-		page('index.html');
+	#[Route('madoff.login', '/login', 'post')]
+	public function login(array &$request) {
+		/** @var UserRepo */
+		$repo = $this->db->repo(UserRepo::class);
+		$user = $repo->getByEmail($request['data']['_email']);
+		if (isset($user) && password_verify($request['data']['_password'], $user->password)) {
+			$this->session->set('role', $user->role);
+			$this->session->set('email', $user->email);
+			$this->session->set('person_id', $user->person_id);
+			header("Location: {$request['data']['_target']}");
+		}
 	}
 }

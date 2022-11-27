@@ -1,4 +1,5 @@
-<form method="POST">
+<form method="POST" action="/login">
+	<input type="hidden" name="_target" value="<?= $_target ?>">
 	<div class="field">
 		<label for="email">Correo</label>
 		<input type="email" name="_email" id="email">
@@ -8,6 +9,6 @@
 		<input type="password" name="_password" id="password">
 	</div>
 	<div class="field">
-		<button>Subir</button>
+		<button>Entrar</button>
 	</div>
 </form>

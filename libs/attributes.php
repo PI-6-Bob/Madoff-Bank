@@ -34,8 +34,9 @@ class Service
 class Task
 {
 	public string $class;
+	public string $fn;
 
-	public function __construct(public string $task, public string $fn, public int $weight = 0) {
+	public function __construct(public string $task, public int $weight = 0) {
 	}
 }
 

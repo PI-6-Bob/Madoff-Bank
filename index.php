@@ -2,11 +2,10 @@
 
 require_once "libs/kernel.php";
 use src\Controller as Cont;
-use src\Task as Task;
 use src\Service as Serv;
 
 (new App([
-	Database::class,
+	Serv\Logged::class,
 	Cont\Index::class,
-	Serv\Test::class,
+	Cont\Home::class,
 ]))->run($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);

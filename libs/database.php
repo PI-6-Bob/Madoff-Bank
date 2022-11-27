@@ -2,13 +2,6 @@
 
 use libs\Attribute\Service;
 
-#[Attribute]
-class Entity
-{
-	public function __construct(public string $table) {
-	}
-}
-
 #[Service('database')]
 class Database 
 {
@@ -41,6 +34,27 @@ class Database
 		}
 		return $this->connection;
 	}
+
+	public function repo(string $class) {
+		return new $class($this->getConnection());
+	}
+
+	public function __destruct() {
+		if (isset($this->connection))
+			$this->connection->close();
+	}
 }
 
+class Repository 
+{
+	public function __construct(protected mysqli $connection) {
+	}
+
+	protected function prepare(string $query): mysqli_stmt {
+		$stmt = $this->connection->prepare($query);
+		if ($stmt->errno != 0)
+			throw new Exception("Could not prepare statement {$stmt->error}");
+		return $stmt;
+	}
+}
 

@@ -3,7 +3,8 @@
 require_once 'libs/autoloader.php';
 require_once 'libs/attributes.php';
 require_once 'libs/database.php';
-require_once 'libs/routes.php';
+require_once 'libs/error_pages.php';
+require_once 'libs/sessions.php';
 require_once 'libs/utils.php';
 
 use libs\Attribute\Route;
@@ -16,6 +17,8 @@ if (file_exists(__DIR__ . '/../local.ini')) # Load local file if exists
 	$_ENV += parse_ini_file(__DIR__ . '/../local.env', true);
 
 # Set the configuration for php
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+ini_set('session.name', $_ENV['SESSION_NAME'] ?? null);
 ini_set('session.cookie_samesite', 'Lax');
 ini_set('session.cookie_httponly', 1);
 header_remove('X-Powered-By');
@@ -27,7 +30,12 @@ class App
 	private array $tasks = [];
 	
 	public function __construct(array $workers) {
-		$workers[] = NotFound::class;
+		$workers = array_merge([ 
+			NotFound::class,
+			InternalError::class,
+	    Database::class,
+			Session::class,
+		], $workers);
 		foreach ($workers as $class) {
 			$reflection = new ReflectionClass($class);
 			/** @var ReflectionAttribute */
@@ -35,9 +43,6 @@ class App
 				$meta = $attr->newInstance();
 				$meta->class = $class;
 				switch ($meta::class) {
-					case Task::class:
-						$this->add_task($meta);
-						break;
 					case Service::class:
 						$this->add_service($meta);
 						break;
@@ -52,6 +57,16 @@ class App
 					switch ($meta::class) {
 						case Route::class:
 							$this->add_route($meta);
+							break;
+						case Task::class:
+							$attributes = $reflection->getAttributes(Service::class);
+							if (empty($attributes))
+								throw new Exception('Task has no service');
+							$attr = reset($attributes);
+							/** @var Service */
+							$service = $attr->newInstance();
+							$meta->service = $service->name;
+							$this->add_task($meta);
 							break;
 					}
 				} // attr
@@ -77,10 +92,14 @@ class App
 		$this->routes['routes'][$route->name] = $route;
 	}
 
+	public function route(string $name): Route {
+		return $this->routes['routes'][$name] ?? null;
+	}
+
 	public function run(string $uri, string $method) {
 		$url_path = parse_url($uri, PHP_URL_PATH);
 		$method = strtolower($method);
-		$route = $this->routes['paths'][$url_path] ?? 'error.not_found';
+		$route_name = $this->routes['paths'][$url_path] ?? 'error.not_found';
 		$request = [
 			'headers' => getallheaders(),
 			'cookies' => $_COOKIE,
@@ -88,15 +107,16 @@ class App
 			'data' => $_POST,
 			'path' => $url_path,
 			'method' => $method,
-			'route' => &$route
+			'route' => $this->route($route_name),
 		];
-		$this->execute('router.before', $request);
+		$this->execute('router.before', $request, $route_name);
+		$route = $this->route($route_name);
+		$request['route'] = $route;
 		/** @var Route */
-		$route_data = $this->routes['routes'][$route] ?? null;
-		if (isset($route_data->method) && strcmp($method, $route_data->method) != 0)
-			$route_data = $this->routes['routes']['error.not_found'];
-		$controller = new $route_data->class($this);
-		$response = $controller->{$route_data->fn}($this, $request);
+		if (isset($route->method) && strcmp($method, $route->method) != 0)
+			$route = $this->routes['routes']['error.not_found'];
+		$controller = new $route->class($this);
+		$response = $controller->{$route->fn}($request);
 		$this->execute('router.after', $request, $response);
 		echo $response;
 	}
@@ -105,14 +125,30 @@ class App
 		return $this->services[$name] ?? null;
 	}
 
-	public function execute(string $task_name, ...$args) {
+	public function execute(string $task_name, &...$args) {
 		/** @var SplPriorityQueue */
 		$task_queue = $this->tasks[$task_name] ?? [];
 		/** @var Task */
 		foreach ($task_queue as $task) {
-			$executor = new $task->class($this);
-			$executor->{$task->fn}($this, ...$args);
+			$service = $this->service($task->service);
+			$service->{$task->fn}(...$args);
 		}
 	}
 }
 
+abstract class Controller 
+{
+	protected Session $session;
+	protected Database $db;
+
+	public function __construct(App $app) {
+		$this->session = $app->service('session.manager');
+		$this->db = $app->service('database');
+	}
+
+	final protected function page(string $file, array $data = []) {
+		if ($this->session->isLogged())
+			$data['_session'] = $_SESSION;
+		page($file, $data);
+	}
+}
