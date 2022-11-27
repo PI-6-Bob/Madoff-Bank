@@ -26,7 +26,7 @@ class IsLogged
 	}
 
 	#[Task('router.before', 0)]
-	public function checkSession(array &$request, string &$route_name) {
+	public function checkSession(array &$request) {
 		$reflection = new ReflectionClass($request['route']->class);
 		$attributes = $reflection->getAttributes();
 		foreach ($attributes as $attr) {

@@ -12,7 +12,9 @@ class Home extends Controller
 {
 	#[Route('madoff.home', '/home')]
 	public function content() {
-		$this->page('home.php');
+		$this->page('home.php', [
+			'title' => 'Banca digital'
+		]);
 	}
 
 	#[Route('madoff.logout', '/logout')]

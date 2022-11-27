@@ -25,20 +25,22 @@ class Users extends Repository
 			$account->role
 		);
 		$stmt->execute();
-		$ret = $stmt->insert_id;
+		$account->id = $stmt->insert_id;
 		$stmt->close();
-		return $ret;
+		return $account->id;
 	}
 
-	public function updateUser(Account $new) {
-		$stmt = $this->prepare('UPDATE account SET email=?, phone=?, password=?, person_id=?, role=? WHERE id=?');
-		$stmt->bind_param('sssisi', 
-			$new->email,
-			$new->phone,
-			$new->password,
-			$new->person_id,
-			$new->role,
-			$new->id
+	public function updateUser(Account $user) {
+		$stmt = $this->prepare('UPDATE account SET email=?, phone=?, password=?, person_id=?, role=?, amount=?, status=? WHERE id=?');
+		$stmt->bind_param('sssisii',
+			$user->email,
+			$user->phone,
+			$user->password,
+			$user->person_id,
+			$user->role,
+			$user->amount,
+			$user->status,
+			$user->id
 		);
 		$stmt->execute();
 		$stmt->close();

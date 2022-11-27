@@ -9,7 +9,6 @@ class Person
 	public string $last_name;
 	public string $birth_date;
 	public string $registered_on;
-	public bool $status;
 	public string $curp;
 	public string $address;
 	public string $rfc;

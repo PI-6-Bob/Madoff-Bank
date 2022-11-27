@@ -3,7 +3,8 @@
 namespace src\Repository;
 
 use Repository;
-use src\Entity\Person;
+use src\Entity\Account;
+use src\Entity\Loan;
 
 class Loans extends Repository
 {
@@ -14,68 +15,51 @@ class Loans extends Repository
 		$stmt->close();
 	}
 
-	public function newPerson(Person $person): int {
-		$stmt = $this->prepare('INSERT INTO person(address, birth_date, curp, first_name, last_name, rfc, marital_status) VALUES (?, ?, ?, ?, ?, ?, ?)');
-		$stmt->bind_param('sssssss', 
-			$person->address, 
-			$person->birth_date,
-			$person->curp, 
-			$person->first_name, 
-			$person->last_name,
-			$person->rfc,
-			$person->marital_status
+	public function newLoan(Loan $loan): int {
+		$stmt = $this->prepare('INSERT INTO loan(amount, periods, account_id) VALUES (?, ?, ?)');
+		$stmt->bind_param('dii', 
+			$loan->amount, 
+			$loan->periods,
+			$loan->account_id
 		);
 		$stmt->execute();
-		$ret = $stmt->insert_id;
+		$loan->id = $stmt->insert_id;
 		$stmt->close();
-		return $ret;
+		return $loan->id;
 	}
 
-	public function updatePerson(Person $new) {
-		$stmt = $this->prepare('UPDATE person SET address=?, birth_date=?, curp=?, first_name=?, last_name=?, rfc=?, marital_status=?, status=? WHERE id=?');
-		$stmt->bind_param('sssisi', 
-			$new->address, 
-			$new->birth_date,
-			$new->curp, 
-			$new->first_name, 
-			$new->last_name,
-			$new->rfc,
-			$new->marital_status,
-			$new->status,
-			$new->id
+	public function updateLoan(Loan $loan) {
+		$stmt = $this->prepare('UPDATE loan SET periods=?, amount=?, account_id=?, status=? WHERE id=?');
+		$stmt->bind_param('idiii', 
+			$loan->amount, 
+			$loan->periods,
+			$loan->account_id,
+			$loan->status,
+			$loan->id
 		);
 		$stmt->execute();
 		$stmt->close();
 	}
 
-	public function getById(int $id): ?Person {
-		$stmt = $this->prepare('SELECT * FROM person WHERE id=?');
+	public function getById(int $id): ?Loan {
+		$stmt = $this->prepare('SELECT * FROM loan WHERE id=?');
 		$stmt->bind_param('i', $id);
 		$stmt->execute();
 		$res = $stmt->get_result();
-		$ret = $res->fetch_object(Person::class);
+		$ret = $res->fetch_object(Loan::class);
 		$res->close();
 		$stmt->close();
 		return $ret;
 	}
 
-	public function getByCurp(string $curp): ?Person {
-		$stmt = $this->prepare('SELECT * FROM person WHERE curp=?');
-		$stmt->bind_param('s', $curp);
+	public function accountLoans(Account $account): array {
+		$stmt = $this->prepare('SELECT * FROM loan WHERE account_id=?');
+		$stmt->bind_param('i', $account->id);
 		$stmt->execute();
 		$res = $stmt->get_result();
-		$ret = $res->fetch_object(Person::class);
-		$res->close();
-		$stmt->close();
-		return $ret;
-	}
-
-	public function getByRfc(string $rfc): ?Person {
-		$stmt = $this->prepare('SELECT * FROM person WHERE rfc=?');
-		$stmt->bind_param('s', $rfc);
-		$stmt->execute();
-		$res = $stmt->get_result();
-		$ret = $res->fetch_object(Person::class);
+		$ret = [];
+		while ($loan = $res->fetch_object(Loan::class)) 
+			$ret[] = $loan;
 		$res->close();
 		$stmt->close();
 		return $ret;

@@ -9,8 +9,8 @@ class Transaction
 	public int $to;
 	public string $when;
 	public float $amount;
-	public string $ubication;
-	public bool $validated;
 	public string $body;
+	public float $latitude;
+	public float $altitude;
 }
 

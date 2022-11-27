@@ -10,4 +10,6 @@ class Account
 	public int $person_id;
 	public string $role;
 	public string $password;
+	public float $balance;
+	public bool $status;
 }

@@ -26,23 +26,22 @@ class Persons extends Repository
 			$person->marital_status
 		);
 		$stmt->execute();
-		$ret = $stmt->insert_id;
+		$person->id = $stmt->insert_id;
 		$stmt->close();
-		return $ret;
+		return $person->id;
 	}
 
-	public function updatePerson(Person $new) {
-		$stmt = $this->prepare('UPDATE person SET address=?, birth_date=?, curp=?, first_name=?, last_name=?, rfc=?, marital_status=?, status=? WHERE id=?');
-		$stmt->bind_param('sssisi', 
-			$new->address, 
-			$new->birth_date,
-			$new->curp, 
-			$new->first_name, 
-			$new->last_name,
-			$new->rfc,
-			$new->marital_status,
-			$new->status,
-			$new->id
+	public function updatePerson(Person $person) {
+		$stmt = $this->prepare('UPDATE person SET address=?, birth_date=?, curp=?, first_name=?, last_name=?, rfc=?, marital_status=? WHERE id=?');
+		$stmt->bind_param('sssssssi', 
+			$person->address, 
+			$person->birth_date,
+			$person->curp, 
+			$person->first_name, 
+			$person->last_name,
+			$person->rfc,
+			$person->marital_status,
+			$person->id
 		);
 		$stmt->execute();
 		$stmt->close();
