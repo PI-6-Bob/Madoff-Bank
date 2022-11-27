@@ -6,12 +6,13 @@ use libs\Attribute\Task;
 #[Service('session.manager')]
 class Session
 {
+	const COOKIE = 'SSID';
 	private bool $started = false;
 
-	#[Task('router.before')]
+	#[Task('router.before', 1)]
 	public function processRequest(array &$request) {
-		$_sessid = $request['cookies']['SSID'] ?? null;
-		$_sess_path = session_save_path() . "/$_sessid";
+		$_sessid = $request['cookies'][self::COOKIE] ?? null;
+		$_sess_path = session_save_path() . "/sess_$_sessid";
 		if (!isset($_sessid))
 			return $request['session'] = false;
 		if (!file_exists($_sess_path))
@@ -27,6 +28,11 @@ class Session
 	public function start() {
 		$this->started = true;
 		session_start();
+	}
+
+	public function stop() {
+		session_destroy();
+		setcookie(self::COOKIE, '');
 	}
 
 	public function set(string $key, mixed $value) {

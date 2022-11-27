@@ -4,14 +4,16 @@ namespace src\Controller;
 
 use Controller;
 use libs\Attribute\Route;
+use src\Attribute\NotLogged;
 use src\Repository\User as UserRepo;
 
+#[NotLogged]
 class Index extends Controller
 {
 	#[Route('madoff.index', '/')]
 	public function content(array &$request) {
 		$this->page('index.php', [
-			'_target' => $request['_referer'] ?? '/home',
+			'_target' => $request['params']['_target'] ?? '/home',
 		]);
 	}
 
@@ -26,5 +28,6 @@ class Index extends Controller
 			$this->session->set('person_id', $user->person_id);
 			header("Location: {$request['data']['_target']}");
 		}
+		header("Location: {$request['headers']['Referer']}");
 	}
 }

@@ -11,6 +11,8 @@ use libs\Attribute\Route;
 use libs\Attribute\Service;
 use libs\Attribute\Task;
 
+const TMP_DIR = __DIR__ . '/../.tmp';
+
 # Load ini files for configuration
 $_ENV += parse_ini_file(__DIR__ . '/../site.env', true);
 if (file_exists(__DIR__ . '/../local.ini')) # Load local file if exists
@@ -21,6 +23,8 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 ini_set('session.name', $_ENV['SESSION_NAME'] ?? null);
 ini_set('session.cookie_samesite', 'Lax');
 ini_set('session.cookie_httponly', 1);
+ini_set('session.save_path', TMP_DIR);
+ini_set('upload_tmp_dir', TMP_DIR);
 header_remove('X-Powered-By');
 
 class App
@@ -92,7 +96,7 @@ class App
 		$this->routes['routes'][$route->name] = $route;
 	}
 
-	public function route(string $name): Route {
+	public function route(string $name): ?Route {
 		return $this->routes['routes'][$name] ?? null;
 	}
 

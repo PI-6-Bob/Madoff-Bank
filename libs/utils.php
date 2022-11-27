@@ -13,3 +13,7 @@ function page(string $_file, array $_context = []) {
 	include 'templates/_base.php';
 }
 
+function redirect(string $uri) {
+	header("Location: $uri");
+	die;
+}

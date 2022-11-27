@@ -4,13 +4,19 @@ namespace src\Controller;
 
 use Controller;
 use libs\Attribute\Route;
-use src\Attribute\Logged;
+use src\Attribute\IsLogged;
 
-#[Logged]
+#[IsLogged]
 class Home extends Controller
 {
 	#[Route('madoff.home', '/home')]
 	public function content() {
 		$this->page('home.php');
+	}
+
+	#[Route('madoff.logout', '/logout')]
+	public function logout() {
+		$this->session->stop();
+		redirect('/');
 	}
 }

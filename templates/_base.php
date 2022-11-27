@@ -15,7 +15,12 @@
 	<?php endforeach ?>
 </head>
 <body>
-	<?php include 'templates/header-anon.html' ?>
+<?php 
+if (isset($_session)):
+		include 'templates/header-user.php';
+else:
+		include 'templates/header-anon.html';
+endif ?>
 	<main id='content'><?php include "templates/$_file" ?></main>
 </body>
 </html>
