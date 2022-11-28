@@ -51,9 +51,9 @@ class Loans extends Repository
 		return $ret;
 	}
 
-	public function accountLoans(Account $account): array {
-		$stmt = $this->prepare('SELECT * FROM loan WHERE account_id=?');
-		$stmt->bind_param('i', $account->id);
+	public function accountLoans(int $account_id): array {
+		$stmt = $this->prepare('SELECT *, NOT EXISTS(SELECT 1 FROM debts d WHERE d.loan = l.id AND d.`transaction` IS NULL) AS `status` FROM loan l WHERE l.account_id=?');
+		$stmt->bind_param('i', $account_id);
 		$stmt->execute();
 		$res = $stmt->get_result();
 		$ret = [];

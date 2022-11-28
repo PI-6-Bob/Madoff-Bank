@@ -31,14 +31,13 @@ class Users extends Repository
 	}
 
 	public function updateUser(Account $user) {
-		$stmt = $this->prepare('UPDATE account SET email=?, phone=?, password=?, person_id=?, role=?, amount=?, status=? WHERE id=?');
+		$stmt = $this->prepare('UPDATE account SET email=?, phone=?, password=?, person_id=?, role=?, status=? WHERE id=?');
 		$stmt->bind_param('sssisii',
 			$user->email,
 			$user->phone,
 			$user->password,
 			$user->person_id,
 			$user->role,
-			$user->amount,
 			$user->status,
 			$user->id
 		);

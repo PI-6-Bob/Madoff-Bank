@@ -14,7 +14,7 @@
 
 <div>
 	<p><a title="Persona" href="/admin/person?id=<?= e($user->person_id) ?>">Dueño de la cuenta</a></p>
-	<p>Saldo: <em class="remark"><?= e(number_format($user->balance)) ?></em></p>
+	<p>Saldo: <em class="remark">$<?= e(number_format($user->balance)) ?></em></p>
 	<p>Estado: <em class="remark"><?= e($user->status? 'Activo' : 'Inactivo') ?></em></p>
 	<p>Telefono: <em class="remark"><?= e($user->phone) ?></em></p>
 </div>

@@ -47,7 +47,7 @@ p {
 /**
  * Input resets and global sytles
  * */
-input, textarea, button, .btn
+select, input, textarea, button, .btn
 {
 	appearance: textfield;
 	display: inline-block;
@@ -63,19 +63,19 @@ input, textarea, button, .btn
 	color: inherit;
 }
 
-input:hover, textarea:hover, button:hover, .btn:hover
+select:hover, input:hover, textarea:hover, button:hover, .btn:hover
 {
 	border: 1px solid gray;
 }
 
-input:focus, textarea:focus, button:focus, .btn:focus
+select:focus, input:focus, textarea:focus, button:focus, .btn:focus
 {
 	background: white;
 	border: 1px solid navy;
 	outline: 4px solid lightblue;
 }
 
-input:disabled, textarea:disabled, button:disabled, .btn:disabled
+select:disabled, input:disabled, textarea:disabled, button:disabled, .btn:disabled
 {
 	color: gray;
 	cursor: not-allowed;

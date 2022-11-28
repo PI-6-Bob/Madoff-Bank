@@ -8,5 +8,6 @@ use src\Service as Serv;
 	Cont\Index::class,
 	Cont\Home::class,
 	Cont\Accounts::class,
+	Cont\Client::class,
 	Serv\IsLogged::class,
 ]))->run($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);
