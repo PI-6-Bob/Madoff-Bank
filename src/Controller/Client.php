@@ -60,7 +60,31 @@ class Client extends Controller
 		$this->page('client-loan.php', [
 			'title' => 'Prestamo',
 			'loan' => $loan_repo->getById($request['params']['id'] ?? 0),
+			'debts' => $loan_repo->getDebts($request['params']['id'] ?? 0),
 		]);
+	}
+
+	#[Route('madoff.loan.before_pay', '/home/loan/pay', 'get')]
+	public function loan_before_pay(array &$request) {
+		/** @var Loans */
+		$loan_repo = $this->db->repo(Loans::class);
+		$this->page('pay-loan.php', [
+			'title' => 'Pagar prestamo',
+			'loan' => $loan_repo->getById($request['params']['id'] ?? 0),
+		]);
+	}
+
+	#[Route('madoff.loan.pay', '/home/loan/deposit', 'get')]
+	public function loan_pay(array &$request) {
+		/** @var Loans */
+		try {
+			$loan_repo = $this->db->repo(Loans::class);
+			$loan_repo->depositLoan($this->session->get('uid'), $request['params']['id'] ?? 0);
+			redirect('/home');
+		} catch(Exception $ex) {
+			if ($ex->getMessage() == 'The debt does not exist')
+				 throw new Message('No hay una deuda actual', 'Regrese el siguinte mes para pagar la deuda');
+		}
 	}
 }
 

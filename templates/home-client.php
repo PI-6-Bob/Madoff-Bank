@@ -7,7 +7,9 @@
 <table>
     <colgroup>
         <col class="_id">
+        <col class="_body">
         <col class="_amount">
+    </colgroup>
     <thead>
         <tr>
             <th>Id</th>

@@ -10,6 +10,7 @@
         <col class="_balance">
         <col class="_status">
         <col class="_actions">
+    </colgroup>
     <thead>
         <tr>
             <th>No. Cuenta</th>

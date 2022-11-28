@@ -78,8 +78,10 @@ class Users extends Repository
 		return $ret;
 	}
 
-	public function getClients(): array {
-		$stmt = $this->prepare('SELECT * FROM account a JOIN client c ON a.id = c.account_id WHERE a.role = ?');
+	public function getClients(int $account_id, int $limit, int $page = 0): array {
+		$offset = $page > 0? $page * $limit : 0;
+		$stmt = $this->prepare('SELECT a.* FROM account a JOIN client c ON a.id = c.account_id WHERE a.role = "client" AND c.executive_id  = (SELECT e.id FROM executive e WHERE e.account_id = ?) LIMIT ?, ?');
+		$stmt->bind_param('iii', $account_id, $offset, $limit);
 		$stmt->execute();
 		$res = $stmt->get_result();
 		$ret = [];

@@ -63,5 +63,25 @@ class Loans extends Repository
 		$stmt->close();
 		return $ret;
 	}
+
+	public function getDebts(int $loan_id): array {
+		$stmt = $this->prepare('SELECT * FROM debts d WHERE d.loan = ?');
+		$stmt->bind_param('i', $loan_id);
+		$stmt->execute();
+		$res = $stmt->get_result();
+		$ret = [];
+		while ($loan = $res->fetch_object(Loan::class)) 
+			$ret[] = $loan;
+		$res->close();
+		$stmt->close();
+		return $ret;
+	}
+
+	public function depositLoan(int $account_id, int $loan_id, float $latitude = 0, float $altitude = 0) {
+		$stmt = $this->prepare('CALL loan_deposit(?, ?, ?, ?)');
+		$stmt->bind_param('iidd', $account_id, $loan_id, $latitude, $altitude);
+		$stmt->execute();
+		$stmt->close();
+	}
 }
 

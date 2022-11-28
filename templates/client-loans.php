@@ -5,13 +5,16 @@
 <table>
     <colgroup>
         <col class="_id">
-        <col class="_body">
         <col class="_amount">
+        <col class="_periods">
+        <col class="_status">
+        <col class="_actions">
+    </colgroup>
     <thead>
         <tr>
             <th>Id</th>
             <th>Cantidad</th>
-            <th>Periodos</th>
+            <th>Meses</th>
             <th>Estado</th>
             <th>Acciones</th>
         </tr>

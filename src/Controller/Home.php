@@ -32,7 +32,7 @@ class Home extends Controller
 				$data['transactions'] = $transaction_repo->accountTransactions($data['user'], 10, $request['params']['p'] ?? 0);
 				break;
 			case 'executive':
-				$data['clients'] = $user_repo->getClients($this->session->get('uid'));
+				$data['users'] = $user_repo->getClients($this->session->get('uid'),  10, $request['params']['p'] ?? 0);
 				break;
 		}
 
