@@ -1,0 +1,54 @@
+.title-1, .title, .title-2, .title-3, .title-4, .title-5
+{
+	font-size: 2.2rem;
+	font-weight: 500;
+	margin: 1.2rem 0;
+}
+
+.title-2
+{
+	font-size: 2rem;
+}
+
+.title-3
+{
+	font-size: 1.8rem;
+}
+
+.title-4
+{
+	font-size: 1.6rem;
+}
+
+.title-5
+{
+	font-size: 1.4rem;
+}
+
+.subtitle-1, .subtitle, .subtitle-2, .subtitle-3, .subtitle-4, .subtitle-5
+{
+	font-size: 1.4rem;
+	font-weight: 200;
+	margin: 0;
+	margin-bottom: 1rem;
+}
+
+.subtitle-2
+{
+	font-size: 1.3rem;
+}
+
+.subtitle-3
+{
+	font-size: 1.2rem;
+}
+
+.subtitle-4
+{
+	font-size: 1.1rem;
+}
+
+.subtitle-5
+{
+	font-size: 1rem;
+}

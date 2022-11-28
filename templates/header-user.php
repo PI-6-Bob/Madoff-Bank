@@ -1,6 +1,11 @@
-<header>
-	<h1>MADOFF</h1>
-	<a href="/home">Inicio</a>
-	<a href="/logout">Salir</a>
+<header id="madoff-header">
+	<div class="brand">
+		<h1>MADOFF</h1>
+	</div>
+	<nav class="navbar">
+		<a class="item" href="/home">Inicio</a>
+		<a class="item" href='/home/profile'><?= $_session['email'] ?></a>
+		<a class="item" href="/logout">Salir</a>
+	</nav>
 </header>
 

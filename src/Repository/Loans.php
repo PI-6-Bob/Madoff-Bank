@@ -29,12 +29,11 @@ class Loans extends Repository
 	}
 
 	public function updateLoan(Loan $loan) {
-		$stmt = $this->prepare('UPDATE loan SET periods=?, amount=?, account_id=?, status=? WHERE id=?');
+		$stmt = $this->prepare('UPDATE loan SET periods=?, amount=?, account_id=?, WHERE id=?');
 		$stmt->bind_param('idiii', 
 			$loan->amount, 
 			$loan->periods,
 			$loan->account_id,
-			$loan->status,
 			$loan->id
 		);
 		$stmt->execute();

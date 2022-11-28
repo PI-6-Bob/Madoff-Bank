@@ -10,7 +10,7 @@ class Person
 	public string $birth_date;
 	public string $registered_on;
 	public string $curp;
-	public string $address;
+	public ?string $address;
 	public string $rfc;
 	public string $marital_status;
 }

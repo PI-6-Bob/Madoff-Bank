@@ -1,0 +1,12 @@
+.fullw 
+{
+	width: 100%;
+}
+
+.centered 
+{
+	align-self: center;
+	justify-self: center;
+	text-align: center;
+	margin: auto;
+}

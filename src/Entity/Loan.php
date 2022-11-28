@@ -8,6 +8,8 @@ class Loan
 	public float $amount;
 	public int $periods;
 	public int $account_id;
-	public bool $status;
+	public float $interest;
+	public float $periodic_payment;
+	public string $date;
 }
 

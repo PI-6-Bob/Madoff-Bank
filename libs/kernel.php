@@ -127,7 +127,7 @@ class App
 		} catch(Error|Exception $e) {
 			$route = $this->route('error.internal');
 			$controller = new $route->class($this);
-			$response = $controller->{$route->fn}($request);
+			$response = $controller->{$route->fn}($request, $e);
 		}
 	}
 
