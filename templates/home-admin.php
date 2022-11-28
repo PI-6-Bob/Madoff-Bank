@@ -1,5 +1,8 @@
 <h2 class="subtitle-2">Cuentas en la plataforma: </h2>
-<?php include 'templates/include/pager.php' ?>
+<div>
+    <a class="btn" href="/admin/user/new">Nuevo usuario</a>
+    <?php include 'templates/include/pager.php' ?>
+</div>
 <table>
     <colgroup>
         <col class="_id">
@@ -23,7 +26,7 @@
         <tr>
             <td class="centered"><?= e($user->id) ?></td>
             <td>
-                <a href="mailto:<?= u($user->email) ?>">
+                <a href="mailto:<?= e($user->email) ?>">
                     <?= e($user->email) ?>
                 </a>
             </td>
@@ -32,13 +35,13 @@
             <td class="centered"><?= e($user->status? 'Activo' : 'Inactivo') ?></td>
             <td>
                 <nav class="actions">
-                    <a class="btn material-icons" href="/admin/user?id=<?= u($user->id) ?>">visibility</a>
-                    <a class="btn material-icons" href="/admin/user/edit?id=<?= u($user->id) ?>">edit</a>
-                    <a class="btn material-icons" href="/admin/user/delete?id=<?= u($user->id) ?>">delete</a>
+                    <a class="btn material-icons" href="/admin/user?id=<?= e($user->id) ?>">visibility</a>
+                    <a class="btn material-icons" href="/admin/user/edit?id=<?= e($user->id) ?>">edit</a>
+                    <a class="btn material-icons" href="/admin/user/delete?id=<?= e($user->id) ?>">delete</a>
                     <?php if ($user->status): ?>
-                    <a class="btn material-icons" href="/admin/user/ban?id=<?= u($user->id) ?>">remove_circle_outline</a>
+                    <a class="btn material-icons" href="/admin/user/ban?id=<?= e($user->id) ?>">remove_circle_outline</a>
                     <?php else: ?>
-                    <a class="btn material-icons" href="/admin/user/unban?id=<?= u($user->id) ?>">add_circle_outline</a>
+                    <a class="btn material-icons" href="/admin/user/unban?id=<?= e($user->id) ?>">add_circle_outline</a>
                     <?php endif ?>
                 </nav>
             </td>

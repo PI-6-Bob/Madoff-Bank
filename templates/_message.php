@@ -1,6 +1,6 @@
 <main>
-	<h1 class="title"><?= $message->getTitle() ?></h1>
-	<p><?= $message->getMessage() ?></p>
-	<a class="btn" href="<?= $referer ?? '/' ?>">Regresar</a>
+	<h1 class="title"><?= e($message->getTitle()) ?></h1>
+	<p><?= e($message->getMessage()) ?></p>
+	<a class="btn" href="<?= e($referer ?? '/') ?>">Regresar</a>
 </main>
 

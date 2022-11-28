@@ -9,11 +9,11 @@
 	<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" defer>
 	<?php foreach ($_styles ?? [] as $href): ?>
-		<link rel="stylesheet" href="/assets/<?= u($href) ?>">
+		<link rel="stylesheet" href="/assets/<?= e($href) ?>">
 	<?php endforeach ?>
 	<script src="/src/main.js" type="module" defer></script>
 	<?php foreach ($_scripts ?? [] as $src): ?>
-		<script src="/src/<?= u($src) ?>" type="module" defer></script>
+		<script src="/src/<?= e($src) ?>" type="module" defer></script>
 	<?php endforeach ?>
 </head>
 <body>

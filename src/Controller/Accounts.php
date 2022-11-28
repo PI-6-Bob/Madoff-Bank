@@ -17,14 +17,25 @@ class Accounts extends Controller
 	public function account(array &$request) {
 		/** @var Users */
 		$user_repo = $this->db->repo(Users::class);
-		$user = $user_repo->getById($request['params']['id'] ?? 0);
+		$user = $user_repo->getById(intval($request['params']['id'] ?? 0));
 		if (!isset($user))
 			throw new Message('Usuario no existe', 'El usuario que especifico no existe');
-		/** @var Persons */
-		$person_repo = $this->db->repo(Persons::class);
-		$this->page('admin-user.php', [
-			'user' => $user,
-			'person' => $person_repo->getById($user->person_id),
+		$this->page('account.php', [ 'user' => $user ]);
+	}
+
+	#[Route('madoff.user.edit', '/admin/user/edit', 'GET')]
+	public function pre_edit(array &$request) {
+		$this->page('account-edit.php', [
 		]);
+	}
+
+	#[Route('madoff.account.edit', '/admin/user/edit', 'POST')]
+	public function edit(array &$request) {
+		/** @var Users */
+		$user_repo = $this->db->repo(Users::class);
+		$user = $user_repo->getById(intval($request['params']['id'] ?? 0));
+		if (!isset($user))
+			throw new Message('Usuario no existe', 'El usuario que especifico no existe');
+		$this->page('account.php', [ 'user' => $user ]);
 	}
 }

@@ -1,3 +1,4 @@
+<img src="/assets/logo.svg" alt="Madoff Logo" class="centered">
 <div class="_container">
 	<h1 class="title centered">Iniciar sesion</h1>
 	<form method="POST" action="/login">
