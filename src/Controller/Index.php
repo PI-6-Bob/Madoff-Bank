@@ -4,6 +4,7 @@ namespace src\Controller;
 
 use Controller;
 use libs\Attribute\Route;
+use Message;
 use src\Attribute\NotLogged;
 use src\Repository\Users;
 
@@ -43,8 +44,8 @@ class Index extends Controller
 			$this->session->set('email', $user->email);
 			$this->session->set('person_id', $user->person_id);
 			$this->session->set('balance', $user->balance);
-			header("Location: {$request['data']['_target']}");
+			redirect($request['data']['_target']);
 		}
-		header("Location: {$request['headers']['Referer']}");
+		throw new Message('Mal inicio de sesion', 'Los datos proporcionados no son correctos', 403);
 	}
 }

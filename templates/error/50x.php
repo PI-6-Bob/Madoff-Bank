@@ -4,5 +4,6 @@
 	<?php if (!$_ENV['PRODUCTION']): ?>
 	<pre style="margin: 2em 0;"><?= $error->getMessage() . "\n" ?><?= $error->getTraceAsString() ?></pre>
 	<?php endif ?>
+	<a class="btn" href="<?= $referer ?? '/' ?>">Regresar</a>
 </main>
 

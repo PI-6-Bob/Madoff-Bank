@@ -37,6 +37,7 @@ class App
 		$workers = array_merge([ 
 			NotFound::class,
 			InternalError::class,
+			MessagePage::class,
 	    Database::class,
 			Session::class,
 		], $workers);
@@ -124,6 +125,10 @@ class App
 			$response = $controller->{$route->fn}($request);
 			$this->execute('router.after', $request, $response);
 			echo $response;
+		} catch (Message $m) {
+			$route = $this->route('message');
+			$controller = new $route->class($this);
+			$response = $controller->{$route->fn}($request, $m);
 		} catch(Error|Exception $e) {
 			error_log($e->getMessage() . ' ' . $e->getTraceAsString());
 			$route = $this->route('error.internal');
@@ -162,5 +167,24 @@ abstract class Controller
 			$data['_session'] = $_SESSION;
 		$data['_params'] = $_GET;
 		page($file, $data);
+	}
+}
+
+class Message extends Exception
+{
+	protected string $title;
+	protected $code = 200;
+
+	public function __construct(string $title, string $message, int $code = 0) {
+		parent::__construct($message, $code);
+		$this->title = $title;
+	}
+
+	public function getTitle(): string {
+		return $this->title;
+	}
+
+	public function __toString(): string {
+		return $this->message;
 	}
 }

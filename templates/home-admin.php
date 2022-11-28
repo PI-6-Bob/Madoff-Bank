@@ -7,7 +7,6 @@
         <col class="_balance">
         <col class="_status">
         <col class="_actions">
-    </colgroup>
     <thead>
         <tr>
             <th>No. Cuenta</th>
@@ -33,13 +32,13 @@
             <td class="centered"><?= e($user->status? 'Activo' : 'Inactivo') ?></td>
             <td>
                 <nav class="actions">
-                    <a class="btn material-icons" href="/admin/people?id=<?= u($user->id) ?>">visibility</a>
-                    <a class="btn material-icons" href="/admin/people/edit?id=<?= u($user->id) ?>">edit</a>
-                    <a class="btn material-icons" href="/admin/people/delete?id=<?= u($user->id) ?>">delete</a>
+                    <a class="btn material-icons" href="/admin/user?id=<?= u($user->id) ?>">visibility</a>
+                    <a class="btn material-icons" href="/admin/user/edit?id=<?= u($user->id) ?>">edit</a>
+                    <a class="btn material-icons" href="/admin/user/delete?id=<?= u($user->id) ?>">delete</a>
                     <?php if ($user->status): ?>
-                    <a class="btn material-icons" href="/admin/people/ban?id=<?= u($user->id) ?>">remove_circle_outline</a>
+                    <a class="btn material-icons" href="/admin/user/ban?id=<?= u($user->id) ?>">remove_circle_outline</a>
                     <?php else: ?>
-                    <a class="btn material-icons" href="/admin/people/unban?id=<?= u($user->id) ?>">add_circle_outline</a>
+                    <a class="btn material-icons" href="/admin/user/unban?id=<?= u($user->id) ?>">add_circle_outline</a>
                     <?php endif ?>
                 </nav>
             </td>
