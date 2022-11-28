@@ -78,4 +78,16 @@ class Users extends Repository
 		$stmt->close();
 		return $ret;
 	}
+
+	public function getUsers(): array {
+		$stmt = $this->prepare('SELECT * FROM account');
+		$stmt->execute();
+		$res = $stmt->get_result();
+		$ret = [];
+		while ($loan = $res->fetch_object(Account::class)) 
+			$ret[] = $loan;
+		$res->close();
+		$stmt->close();
+		return $ret;
+	}
 }

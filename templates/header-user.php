@@ -4,7 +4,7 @@
 	</div>
 	<nav class="navbar">
 		<a class="item" href="/home">Inicio</a>
-		<a class="item" href='/home/profile'><?= $_session['email'] ?></a>
+		<a class="item" href='/home/profile'><?= e($_session['email']) ?></a>
 		<a class="item" href="/logout">Salir</a>
 	</nav>
 </header>

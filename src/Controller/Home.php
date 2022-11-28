@@ -14,9 +14,20 @@ class Home extends Controller
 {
 	#[Route('madoff.home', '/home')]
 	public function content() {
-		$this->page('home.php', [
-			'title' => 'Banca digital'
-		]);
+		$data = [ 'title' => 'Banca digital' ];
+		/** @var Users */
+		$user_repo = $this->db->repo(Users::class);
+		/** @var Persons */
+		$person_repo = $this->db->repo(Persons::class);
+		$data['person'] = $person_repo->getById($this->session->get('person_id'));
+		switch ($this->session->get('role')) {
+			case 'admin':
+				$data['users'] = $user_repo->getUsers();
+				break;
+		}
+
+		// 'user' => $user_repo->getById($this->session->get('uid')),
+		$this->page('home.php', $data);
 	}
 
 	#[Route('madoff.home.profile', '/home/profile')]
