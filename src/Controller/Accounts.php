@@ -9,7 +9,7 @@ use src\Entity\Account;
 use Controller;
 use Message;
 
-#[IsLogged('admin')]
+#[IsLogged('admin', 'executive')]
 class Accounts extends Controller
 {
 

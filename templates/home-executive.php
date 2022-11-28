@@ -1,6 +1,6 @@
 <h2 class="subtitle-2">Clientes registrados: </h2>
 <div>
-    <a class="btn" href="/admin/user/new">Nuevo cliente</a>
+    <a class="btn" href="/executive/client/new">Nuevo cliente</a>
     <?php include 'templates/include/pager.php' ?>
 </div>
 <table>

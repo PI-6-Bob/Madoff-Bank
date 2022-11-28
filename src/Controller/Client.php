@@ -3,9 +3,7 @@
 namespace src\Controller;
 
 use src\Attribute\IsLogged;
-use src\Repository\Users;
 use libs\Attribute\Route;
-use src\Entity\Account;
 use Controller;
 use Exception;
 use Message;
