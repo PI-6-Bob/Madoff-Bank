@@ -7,6 +7,7 @@
 	<title><?= e($title ?? null) ?> ~ Madoff</title>
 	<link rel="stylesheet" href="/assets/global.css">
 	<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" defer>
 	<?php foreach ($_styles ?? [] as $href): ?>
 		<link rel="stylesheet" href="/assets/<?= u($href) ?>">
 	<?php endforeach ?>
@@ -17,12 +18,16 @@
 </head>
 <body>
 <?php 
-if (isset($_session)):
-		include 'templates/header-user.php';
-else:
-		include 'templates/header-anon.php';
-endif ?>
-	<main id='content'><?php include "templates/$_file" ?></main>
+if (isset($_session)) {
+	include 'templates/include/header-user.php';
+	include "templates/include/nav-{$_session['role']}.php";
+} else {
+	include 'templates/include/header-anon.php';
+}
+?>
+	<main id='content'>
+		<?php include "templates/$_file" ?>
+	</main>
 </body>
 </html>
 

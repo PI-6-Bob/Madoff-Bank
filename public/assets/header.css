@@ -12,6 +12,14 @@
 {
 	font-size: 1.5rem;
 	flex: 1 1 auto;
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+}
+
+#madoff-header .brand .logo 
+{
+	margin-right: 1em;
 }
 
 #madoff-header .navbar
@@ -25,7 +33,28 @@
 #madoff-header .navbar a.item
 {
 	text-decoration: none;
-	padding: 0.6em 1em;
-	border: 1px solid lightgray;
-	border-radius: 10px;
+	padding: 0.5em;
+	color: #3a7a3c;
+}
+
+#user-nav
+{
+	transform: translate(-50%, -50%);
+	flex-flow: column nowrap;
+	border-radius: 50px;
+	background: #3a7a3c;
+	position: fixed;
+	display: flex;
+	padding: 10px;
+	z-index: 10;
+	left: 5%;
+	top: 50%;
+	gap: 1em;
+}
+
+#user-nav a.item 
+{
+	text-decoration: none;
+	padding: 10px;
+	color: white;
 }

@@ -15,7 +15,7 @@ const TMP_DIR = __DIR__ . '/../.tmp';
 
 # Load ini files for configuration
 $_ENV += parse_ini_file(__DIR__ . '/../site.env', true);
-if (file_exists(__DIR__ . '/../local.ini')) # Load local file if exists
+if (file_exists(__DIR__ . '/../local.env')) # Load local file if exists
 	$_ENV += parse_ini_file(__DIR__ . '/../local.env', true);
 
 # Set the configuration for php
@@ -125,6 +125,7 @@ class App
 			$this->execute('router.after', $request, $response);
 			echo $response;
 		} catch(Error|Exception $e) {
+			error_log($e->getMessage() . ' ' . $e->getTraceAsString());
 			$route = $this->route('error.internal');
 			$controller = new $route->class($this);
 			$response = $controller->{$route->fn}($request, $e);
@@ -159,6 +160,7 @@ abstract class Controller
 	final protected function page(string $file, array $data = []) {
 		if ($this->session->isLogged())
 			$data['_session'] = $_SESSION;
+		$data['_params'] = $_GET;
 		page($file, $data);
 	}
 }

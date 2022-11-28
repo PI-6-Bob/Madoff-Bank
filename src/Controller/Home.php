@@ -3,7 +3,6 @@
 namespace src\Controller;
 
 use Controller;
-use Exception;
 use libs\Attribute\Route;
 use src\Attribute\IsLogged;
 use src\Repository\Persons;
@@ -13,7 +12,7 @@ use src\Repository\Users;
 class Home extends Controller
 {
 	#[Route('madoff.home', '/home')]
-	public function content() {
+	public function content(array &$request) {
 		$data = [ 'title' => 'Banca digital' ];
 		/** @var Users */
 		$user_repo = $this->db->repo(Users::class);
@@ -22,11 +21,16 @@ class Home extends Controller
 		$data['person'] = $person_repo->getById($this->session->get('person_id'));
 		switch ($this->session->get('role')) {
 			case 'admin':
-				$data['users'] = $user_repo->getUsers();
+				$data['users'] = $user_repo->getUsers(10, $request['params']['p'] ?? 0);
+				break;
+			case 'client':
+				$data['user'] = $user_repo->getById($this->session->get('uid'));
+				break;
+			case 'executive':
+				$data['clients'] = $user_repo->getClients($this->session->get('uid'));
 				break;
 		}
 
-		// 'user' => $user_repo->getById($this->session->get('uid')),
 		$this->page('home.php', $data);
 	}
 

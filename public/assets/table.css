@@ -1,0 +1,28 @@
+table 
+{
+	border-radius: 10px;
+	width: 100%;
+	border-collapse: collapse;
+	border: 0 hidden;
+	overflow: hidden;
+	box-shadow: 0 0 0 1px lightgray;
+}
+
+table th, table td
+{
+	padding: 0.45em;
+	border: 1px solid lightgray;
+}
+
+table .actions 
+{
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-evenly;
+	gap: 10px;
+}
+
+table tr.noresults td
+{
+	height: 200px;
+}

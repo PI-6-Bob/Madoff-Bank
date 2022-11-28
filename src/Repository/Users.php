@@ -79,8 +79,22 @@ class Users extends Repository
 		return $ret;
 	}
 
-	public function getUsers(): array {
-		$stmt = $this->prepare('SELECT * FROM account');
+	public function getClients(): array {
+		$stmt = $this->prepare('SELECT * FROM account a JOIN client c ON a.id = c.account_id WHERE a.role = ?');
+		$stmt->execute();
+		$res = $stmt->get_result();
+		$ret = [];
+		while ($loan = $res->fetch_object(Account::class)) 
+			$ret[] = $loan;
+		$res->close();
+		$stmt->close();
+		return $ret;
+	}
+
+	public function getUsers(int $limit, int $page = 0): array {
+		$offset = $page > 0? $page * $limit : 0;
+		$stmt = $this->prepare('SELECT * FROM account LIMIT ?, ?');
+		$stmt->bind_param('ii', $offset, $limit);
 		$stmt->execute();
 		$res = $stmt->get_result();
 		$ret = [];

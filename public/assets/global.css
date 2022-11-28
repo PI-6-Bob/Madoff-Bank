@@ -1,6 +1,8 @@
 @import '/assets/utils.css';
 @import '/assets/titles.css';
 @import '/assets/header.css';
+@import '/assets/table.css';
+@import '/assets/pager.css';
 
 /**
  * Fonts
@@ -46,7 +48,7 @@ p {
 /**
  * Input resets and global sytles
  * */
-input, textarea, button 
+input, textarea, button, .btn
 {
 	appearance: textfield;
 	display: inline-block;
@@ -58,21 +60,23 @@ input, textarea, button
 	padding: 6px 12px;
 	outline: none;
 	transition: 0.2s all ease-in-out;
+	text-decoration: none;
+	color: inherit;
 }
 
-input:hover, textarea:hover, button:hover 
+input:hover, textarea:hover, button:hover, .btn:hover
 {
 	border: 1px solid gray;
 }
 
-input:focus, textarea:focus, button:focus
+input:focus, textarea:focus, button:focus, .btn:focus
 {
 	background: white;
 	border: 1px solid navy;
 	outline: 4px solid lightblue;
 }
 
-input:disabled, textarea:disabled, button:disabled
+input:disabled, textarea:disabled, button:disabled, .btn:disabled
 {
 	color: gray;
 	cursor: not-allowed;
@@ -86,6 +90,7 @@ textarea
 	min-width: calc(26px + 1em);
 }
 
+.btn
 button, 
 input[type=button], 
 input[type=submit], 

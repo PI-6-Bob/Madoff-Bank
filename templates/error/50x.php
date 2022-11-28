@@ -1,8 +1,8 @@
 <main>
-	<h1>Error del servidor</h1>
+	<h1 class="title">Error del servidor</h1>
 	<p>Ha sucedido un error</p>
-	<p style="margin: 2em 0;">
-		<pre><?= $error->getMessage() ?></pre>
-	</p>
+	<?php if (!$_ENV['PRODUCTION']): ?>
+	<pre style="margin: 2em 0;"><?= $error->getMessage() . "\n" ?><?= $error->getTraceAsString() ?></pre>
+	<?php endif ?>
 </main>
 

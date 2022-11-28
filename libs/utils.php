@@ -19,9 +19,9 @@ function redirect(string $uri) {
 }
 
 function e(mixed $string) {
-	return htmlspecialchars($string);
+	return htmlspecialchars($string ?? '');
 }
 
 function u(mixed $string) {
-	return urlencode($string);
+	return urlencode($string ?? '');
 }
